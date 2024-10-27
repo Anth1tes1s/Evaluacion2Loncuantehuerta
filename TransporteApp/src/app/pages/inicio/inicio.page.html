@@ -1,13 +1,17 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>inicio</ion-title>
+    <ion-title class="ion-text-center" >Bienvenido</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">inicio</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="container">
+    <ion-button expand="full" color="primary" routerLink="/login">
+      ¿Ya tienes una cuenta?
+    </ion-button>
+
+    <ion-button expand="full" color="secondary" routerLink="/registro">
+      ¡Regístrate si no!
+    </ion-button>
+  </div>
 </ion-content>
