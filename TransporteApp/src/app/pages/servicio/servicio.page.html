@@ -1,13 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>servicio</ion-title>
+    <ion-title>Servicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">servicio</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles del Viaje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Conductor:</strong> {{ conductorSeleccionado?.nombre }}</p>
+      <p><strong>Modelo del Vehículo:</strong> {{ conductorSeleccionado?.modelo }}</p>
+      <p><strong>Color del Vehículo:</strong> {{ conductorSeleccionado?.color }}</p>
+      <p><strong>Ubicación del Conductor:</strong> {{ conductorSeleccionado?.ubicacion }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div id="map" style="height: 400px; width: 100%;"></div> <!-- Contenedor para el mapa -->
+
+  <ion-button expand="full" color="danger" (click)="cancelarViaje()">
+    Cancelar viaje
+  </ion-button>
 </ion-content>
