@@ -43,6 +43,7 @@ const routes: Routes = [
     path: 'servicioconductor',
     loadChildren: () => import('./pages/servicioconductor/servicioconductor.module').then( m => m.ServicioconductorPageModule)
   },
+  { path: '**', redirectTo: 'inicio' },
 ];
 
 @NgModule({
