@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
+import { AuthService } from './core/auth.service';
 
 const routes: Routes = [
   {
@@ -21,29 +23,39 @@ const routes: Routes = [
   },
   {
     path: 'recuperarcontrasnia',
-    loadChildren: () => import('./pages/recuperarcontrasnia/recuperarcontrasnia.module').then(m => m.RecuperarcontrasniaPageModule)
+    loadChildren: () => import('./pages/recuperarcontrasnia/recuperarcontrasnia.module').then(m => m.RecuperarContrasniaPageModule)
   },
   {
     path: 'iniciousuario',
+    providers: [AuthService],
+    canMatch: [authGuard],
     loadChildren: () => import('./pages/iniciousuario/iniciousuario.module').then(m => m.IniciousuarioPageModule)
   },
   {
     path: 'registroconductor',
+    providers: [AuthService],
+    canActivate: [authGuard],
     loadChildren: () => import('./pages/registroconductor/registroconductor.module').then(m => m.RegistroconductorPageModule)
   },
   {
     path: 'inicioconductor',
+    providers: [AuthService],
+    canActivate: [authGuard],
     loadChildren: () => import('./pages/inicioconductor/inicioconductor.module').then(m => m.InicioconductorPageModule)
   },
   {
     path: 'servicio',
+    providers: [AuthService],
+    canActivate: [authGuard],
     loadChildren: () => import('./pages/servicio/servicio.module').then( m => m.ServicioPageModule)
   }, 
   {
     path: 'servicioconductor',
+    providers: [AuthService],
+    canActivate: [authGuard],
     loadChildren: () => import('./pages/servicioconductor/servicioconductor.module').then( m => m.ServicioconductorPageModule)
   },
-  { path: '**', redirectTo: 'inicio' },
+  { path: '**', redirectTo: 'registro' },
 ];
 
 @NgModule({
@@ -53,4 +65,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
