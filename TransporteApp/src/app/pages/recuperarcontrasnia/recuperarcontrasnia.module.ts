@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
+import { IonicModule } from '@ionic/angular'; // Importación correcta del IonicModule
 import { RecuperarcontrasniaPageRoutingModule } from './recuperarcontrasnia-routing.module';
-
-import { RecuperarcontrasniaPage } from './recuperarcontrasnia.page';
+import { RecuperarContrasniaPage } from './recuperarcontrasnia.page'; 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, // Asegúrate de que IonicModule esté incluido aquí
     RecuperarcontrasniaPageRoutingModule
   ],
-  declarations: [RecuperarcontrasniaPage]
+  declarations: [RecuperarContrasniaPage]
 })
-export class RecuperarcontrasniaPageModule {}
+export class RecuperarContrasniaPageModule {}
