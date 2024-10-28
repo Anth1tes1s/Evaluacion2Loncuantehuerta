@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 })
 export class InicioconductorPage {
   viajesDisponibles = [
-    { destino: 'Aeropuerto', cliente: 'Juan Pérez', hora: '14:30', origen: 'Plaza de Armas', distancia: 20 },
-    { destino: 'Centro Comercial', cliente: 'María López', hora: '15:00', origen: 'Estación Central', distancia: 15 },
-    { destino: 'Hospital', cliente: 'Pedro González', hora: '15:30', origen: 'Universidad de Chile', distancia: 10 }
+    { destino: 'Aeropuerto Internacional Arturo Merino Benítez, Santiago, Chile', cliente: 'Juan Pérez', hora: '14:30', origen: 'Plaza de Armas, Santiago, Chile', distancia: 20 },
+    { destino: 'Centro Comercial Costanera Center, Santiago, Chile', cliente: 'María López', hora: '15:00', origen: 'Estación Central, Santiago, Chile', distancia: 15 },
+    { destino: 'Hospital Clínico Universidad de Chile, Santiago, Chile', cliente: 'Pedro González', hora: '15:30', origen: 'Universidad de Chile, Santiago, Chile', distancia: 10 }
   ];
 
   constructor(private router: Router) {}
@@ -19,4 +19,3 @@ export class InicioconductorPage {
     this.router.navigate(['/servicioconductor'], { state: { viaje } });
   }
 }
-
