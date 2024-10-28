@@ -1,8 +1,21 @@
-import { inject } from '@angular/core';
-import { AuthService } from '../core/auth.service';
-import { CanActivateFn, CanMatch, CanMatchFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { VerificacionService } from '../services/verificacion.service';
 
-export const authGuard: CanMatchFn = (route, state) => {
-  const authService = inject(AuthService);
-  return authService.getAuthToken();
-};
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private verificacionService: VerificacionService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    if (!this.verificacionService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+    return true;
+  }
+}

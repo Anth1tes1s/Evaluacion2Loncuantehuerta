@@ -26,4 +26,10 @@ export class VerificacionService {
   obtenerUsuarios(): Array<any> {
     return this.usuariosRegistrados;
   }
+
+  // Método para verificar autenticación
+  isAuthenticated(): boolean {
+    // Verifica si existe un token en el almacenamiento local
+    return !!localStorage.getItem('authToken');
+  }
 }

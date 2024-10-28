@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { VerificacionService } from '../../services/verificacion.service';
 import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router'; // Importa Router
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,6 @@ import { Router } from '@angular/router'; // Importa Router
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-
   usuario: string = ''; // Inicializar como cadena vacía
   contrasenia: string = ''; // Inicializar como cadena vacía
 
@@ -31,6 +30,9 @@ export class LoginPage {
     const usuarioEncontrado = usuarios.find(user => user.usuario === this.usuario && user.contrasenia === this.contrasenia);
 
     if (usuarioEncontrado) {
+      // Guardar token de autenticación
+      localStorage.setItem('authToken', 'your-auth-token'); // Token de autenticación simple
+
       const alert = await this.alertController.create({
         header: 'Bienvenido',
         message: 'Usuario ingresado correctamente',
@@ -52,4 +54,3 @@ export class LoginPage {
     }
   }
 }
-
