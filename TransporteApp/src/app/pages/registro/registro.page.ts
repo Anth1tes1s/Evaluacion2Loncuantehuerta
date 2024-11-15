@@ -23,23 +23,23 @@ export class RegistroPage {
   }
 
   guardarDatos() {
-    sessionStorage.setItem('nombre', this.nombre);
-    sessionStorage.setItem('apellido', this.apellido);
-    sessionStorage.setItem('usuario', this.usuario);
-    sessionStorage.setItem('edad', String(this.edad));
-    sessionStorage.setItem('correo', this.correo);
-    sessionStorage.setItem('telefono', this.telefono);
-    sessionStorage.setItem('contrasenia', this.contrasenia);
+    localStorage.setItem('nombre', this.nombre);
+    localStorage.setItem('apellido', this.apellido);
+    localStorage.setItem('usuario', this.usuario);
+    localStorage.setItem('edad', String(this.edad));
+    localStorage.setItem('correo', this.correo);
+    localStorage.setItem('telefono', this.telefono);
+    localStorage.setItem('contrasenia', this.contrasenia);
   }
   
   cargarDatos() {
-    this.nombre = sessionStorage.getItem('nombre') || '';
-    this.apellido = sessionStorage.getItem('apellido') || '';
-    this.usuario = sessionStorage.getItem('usuario') || '';
-    this.edad = Number(sessionStorage.getItem('edad')) || 0;
-    this.correo = sessionStorage.getItem('correo') || '';
-    this.telefono = sessionStorage.getItem('telefono') || '';
-    this.contrasenia = sessionStorage.getItem('contrasenia') || '';
+    this.nombre = localStorage.getItem('nombre') || '';
+    this.apellido = localStorage.getItem('apellido') || '';
+    this.usuario = localStorage.getItem('usuario') || '';
+    this.edad = Number(localStorage.getItem('edad')) || 0;
+    this.correo = localStorage.getItem('correo') || '';
+    this.telefono = localStorage.getItem('telefono') || '';
+    this.contrasenia = localStorage.getItem('contrasenia') || '';
   }
   
   async registrarUsuario() {
