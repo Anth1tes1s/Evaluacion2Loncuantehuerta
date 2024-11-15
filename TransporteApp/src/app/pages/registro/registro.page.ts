@@ -18,8 +18,30 @@ export class RegistroPage {
   telefono!: string;
   contrasenia!: string;
 
-  constructor(private verificacionService: VerificacionService, private alertController: AlertController, private router: Router) {}
+  constructor(private verificacionService: VerificacionService, private alertController: AlertController, private router: Router) {
+    this.cargarDatos(); // Cargar los datos si existen al iniciar la página
+  }
 
+  guardarDatos() {
+    sessionStorage.setItem('nombre', this.nombre);
+    sessionStorage.setItem('apellido', this.apellido);
+    sessionStorage.setItem('usuario', this.usuario);
+    sessionStorage.setItem('edad', String(this.edad));
+    sessionStorage.setItem('correo', this.correo);
+    sessionStorage.setItem('telefono', this.telefono);
+    sessionStorage.setItem('contrasenia', this.contrasenia);
+  }
+  
+  cargarDatos() {
+    this.nombre = sessionStorage.getItem('nombre') || '';
+    this.apellido = sessionStorage.getItem('apellido') || '';
+    this.usuario = sessionStorage.getItem('usuario') || '';
+    this.edad = Number(sessionStorage.getItem('edad')) || 0;
+    this.correo = sessionStorage.getItem('correo') || '';
+    this.telefono = sessionStorage.getItem('telefono') || '';
+    this.contrasenia = sessionStorage.getItem('contrasenia') || '';
+  }
+  
   async registrarUsuario() {
     // Validar que todos los campos estén llenos
     if (!this.nombre || !this.apellido || !this.usuario || !this.edad || !this.correo || !this.telefono || !this.contrasenia) {
@@ -44,6 +66,9 @@ export class RegistroPage {
 
     // Verificar si el usuario puede ser registrado
     if (this.verificacionService.registrarUsuario(nuevoUsuario)) {
+      // Guardar los datos del formulario en localStorage antes de redirigir
+      this.guardarDatos();
+
       const alert = await this.alertController.create({
         header: 'Registro Exitoso',
         message: 'Usuario registrado correctamente',
@@ -65,4 +90,3 @@ export class RegistroPage {
     }
   }
 }
-
