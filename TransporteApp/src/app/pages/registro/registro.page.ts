@@ -75,7 +75,7 @@ export class RegistroPage {
         buttons: [{
           text: 'OK',
           handler: () => {
-            this.router.navigate(['/iniciousuario']); // Redirigir al usuario a la página de inicio
+            this.router.navigate(['/menu']); // Redirigir al usuario a la página de inicio
           }
         }]
       });
