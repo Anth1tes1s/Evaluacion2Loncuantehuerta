@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { VerificacionService } from '../../services/verificacion.service';
 import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router'; // Importa Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -19,7 +19,7 @@ export class RegistroPage {
   contrasenia!: string;
 
   constructor(private verificacionService: VerificacionService, private alertController: AlertController, private router: Router) {
-    this.cargarDatos(); // Cargar los datos si existen al iniciar la página
+    this.cargarDatos(); 
   }
 
   guardarDatos() {
@@ -43,7 +43,7 @@ export class RegistroPage {
   }
   
   async registrarUsuario() {
-    // Validar que todos los campos estén llenos
+   
     if (!this.nombre || !this.apellido || !this.usuario || !this.edad || !this.correo || !this.telefono || !this.contrasenia) {
       const alert = await this.alertController.create({
         header: 'Error',
@@ -51,42 +51,59 @@ export class RegistroPage {
         buttons: ['OK']
       });
       await alert.present();
-      return; // Detener la ejecución si hay campos vacíos
+      return;
     }
 
-    const nuevoUsuario = {
-      nombre: this.nombre,
-      apellido: this.apellido,
-      usuario: this.usuario,
-      edad: this.edad,
-      correo: this.correo,
-      telefono: this.telefono,
-      contrasenia: this.contrasenia
-    };
+    
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirmar registro',
+      message: '¿Estás seguro que quieres registrar este usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          handler: async () => {
+            const nuevoUsuario = {
+              nombre: this.nombre,
+              apellido: this.apellido,
+              usuario: this.usuario,
+              edad: this.edad,
+              correo: this.correo,
+              telefono: this.telefono,
+              contrasenia: this.contrasenia
+            };
 
-    // Verificar si el usuario puede ser registrado
-    if (this.verificacionService.registrarUsuario(nuevoUsuario)) {
-      // Guardar los datos del formulario en localStorage antes de redirigir
-      this.guardarDatos();
+            
+            if (this.verificacionService.registrarUsuario(nuevoUsuario)) {
+              this.guardarDatos();
 
-      const alert = await this.alertController.create({
-        header: 'Registro Exitoso',
-        message: 'Usuario registrado correctamente',
-        buttons: [{
-          text: 'OK',
-          handler: () => {
-            this.router.navigate(['/menu']); // Redirigir al usuario a la página de inicio
+              const successAlert = await this.alertController.create({
+                header: 'Registro Exitoso',
+                message: 'Usuario registrado correctamente',
+                buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    this.router.navigate(['/menu']);
+                  }
+                }]
+              });
+              await successAlert.present();
+            } else {
+              const errorAlert = await this.alertController.create({
+                header: 'Error',
+                message: 'El usuario ya existe. Intente con otro nombre de usuario.',
+                buttons: ['OK']
+              });
+              await errorAlert.present();
+            }
           }
-        }]
-      });
-      await alert.present();
-    } else {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'El usuario ya existe. Intente con otro nombre de usuario.',
-        buttons: ['OK']
-      });
-      await alert.present();
-    }
+        }
+      ]
+    });
+
+    await confirmAlert.present();
   }
 }

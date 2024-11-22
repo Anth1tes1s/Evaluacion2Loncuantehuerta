@@ -18,7 +18,7 @@ export class RegistroconductorPage {
   constructor(private alertController: AlertController, private router: Router) {}
 
   async registrarConductor() {
-    // Validar que los campos no estén vacíos
+    
     if (!this.nombre || !this.rut || !this.matricula || !this.tipoVehiculo || !this.modeloVehiculo || !this.colorVehiculo) {
       const alert = await this.alertController.create({
         header: 'Error',
@@ -29,18 +29,36 @@ export class RegistroconductorPage {
       return;
     }
 
-    // Aquí puedes agregar la lógica para guardar el conductor (ejemplo en un servicio)
-
-    const alert = await this.alertController.create({
-      header: 'Registro Exitoso',
-      message: 'Conductor registrado correctamente.',
-      buttons: [{
-        text: 'OK',
-        handler: () => {
-          this.router.navigate(['/inicioconductor']); // Redirigir al inicio del conductor
+    
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirmar registro',
+      message: '¿Estás seguro de que deseas registrar este Viaje?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          handler: async () => {
+            
+            
+            const successAlert = await this.alertController.create({
+              header: 'Registro Exitoso',
+              message: 'Conductor registrado correctamente.',
+              buttons: [{
+                text: 'OK',
+                handler: () => {
+                  this.router.navigate(['/iniciousuario']);
+                }
+              }]
+            });
+            await successAlert.present();
+          }
         }
-      }]
+      ]
     });
-    await alert.present();
+
+    await confirmAlert.present();
   }
 }
