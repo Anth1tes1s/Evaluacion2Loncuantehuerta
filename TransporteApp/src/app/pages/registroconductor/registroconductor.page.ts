@@ -49,7 +49,7 @@ export class RegistroconductorPage {
               buttons: [{
                 text: 'OK',
                 handler: () => {
-                  this.router.navigate(['/iniciousuario']);
+                  this.router.navigate(['/inicioconductor']);
                 }
               }]
             });
