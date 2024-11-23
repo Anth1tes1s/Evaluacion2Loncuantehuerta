@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./iniciousuario.page.scss'],
 })
 export class IniciousuarioPage implements OnInit {
-  origen: string = '';
+  origen: string = 'Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana';
   destino: string = '';
   tarifaPorKilometro: number = 3500;
   distanciaEstimada: number = 0; // Distancia calculada
