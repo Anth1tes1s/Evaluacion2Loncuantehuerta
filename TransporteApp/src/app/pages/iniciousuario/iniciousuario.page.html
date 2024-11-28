@@ -21,12 +21,12 @@
         <ion-label position="floating">Dirección de Destino</ion-label>
         <ion-input type="text" [(ngModel)]="destino"></ion-input>
       </ion-item>
-      <ion-button (click)="calcularRuta()" expand="full">Calcular Ruta</ion-button>
+      <ion-button (click)="calcularRuta()" expand="full" (click)="someAsyncOperation()">Calcular Ruta</ion-button>
       <p *ngIf="distanciaEstimada > 0">Distancia: {{ distanciaEstimada }} km</p>
       <p *ngIf="precio > 0">Precio: ${{ precio }}</p>
 
       <!-- Botón para confirmar la ruta -->
-      <ion-button (click)="confirmarRuta()" *ngIf="distanciaEstimada > 0" expand="full">CONFIRMAR RUTA</ion-button>
+      <ion-button (click)="confirmarRuta()" *ngIf="distanciaEstimada > 0" expand="full" (click)="someAsyncOperation()">CONFIRMAR RUTA</ion-button>
     </ion-card-content>
   </ion-card>
 

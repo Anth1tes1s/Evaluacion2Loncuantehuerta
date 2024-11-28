@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-iniciousuario',
@@ -16,10 +17,24 @@ export class IniciousuarioPage implements OnInit {
   // Propiedad para almacenar rutas
   rutas: { origen: string; destino: string; distancia: number; precio: number }[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loadingController: LoadingController) {}
 
   ngOnInit() {
     this.initMap(); // Inicializar el mapa al cargar el componente
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      duration: 1500
+    });
+    await loading.present();
+  
+  }
+
+  async someAsyncOperation() {
+    await this.presentLoading();
+
   }
 
   initMap() {
