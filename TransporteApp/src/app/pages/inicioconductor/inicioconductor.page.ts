@@ -1,30 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { ViajeService } from 'src/app/viaje.service'; // Asegúrate de importar el servicio
-import { Router } from '@angular/router'; 
+import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-inicioconductor',
   templateUrl: './inicioconductor.page.html',
   styleUrls: ['./inicioconductor.page.scss'],
 })
 export class InicioconductorPage implements OnInit {
-
-  // Lista de viajes obtenidos desde el servicio
+  conductorActual: any = null;
   viajes: any[] = [];
 
-  constructor(private viajeService: ViajeService,
-    private router: Router) {}
-
-  ngOnInit() {
-    // Obtener los viajes del servicio
-    this.viajes = this.viajeService.obtenerViajes();
-    console.log('Viajes disponibles:', this.viajes);
+  constructor(private storage: Storage) {
+    this.initStorage();
   }
 
-  // Método para seleccionar un viaje y redirigir a servicio
-  seleccionarViaje(viaje: any) {
-    console.log('Viaje seleccionado:', viaje);
-    // Navegar a la página de servicio pasando el viaje
-    // Asegúrate de que la ruta esté configurada correctamente
-    this.router.navigate(['/servicio'], { state: { viaje: viaje } });
+  async initStorage() {
+    await this.storage.create();
+    await this.cargarDatos();
+  }
+
+  async cargarDatos() {
+    // Cargar datos del conductor
+    const conductores = await this.storage.get('conductores') || [];
+    if (conductores.length > 0) {
+      this.conductorActual = conductores[conductores.length - 1]; // Obtener el último conductor registrado
+    }
+
+    // Cargar viajes disponibles
+    this.viajes = await this.storage.get('viajes') || [];
+  }
+
+  ngOnInit() {
   }
 }

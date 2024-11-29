@@ -1,16 +1,50 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Viajes Disponibles</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Viajes Disponibles -->
   <ion-list>
-    <ion-item *ngFor="let viaje of viajes" (click)="seleccionarViaje(viaje)">
-      <ion-label>
-        <h2>{{ viaje.origen }} - {{ viaje.destino }}</h2>
-        <p>Precio: {{ viaje.precio }}</p>
-      </ion-label>
-    </ion-item>
+    
+    <ion-card *ngFor="let viaje of viajes">
+      <ion-card-header>
+        <ion-card-subtitle>Nuevo Viaje</ion-card-subtitle>
+        <ion-card-title>{{ viaje.origen }} → {{ viaje.destino }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-icon name="map-outline"></ion-icon>
+              <ion-text> {{ viaje.distancia }} km</ion-text>
+            </ion-col>
+            <ion-col size="6">
+              <ion-icon name="cash-outline"></ion-icon>
+              <ion-text> ${{ viaje.precio }}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-button expand="block" color="success">
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+          Aceptar Viaje
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
+
+  <!-- Mensaje cuando no hay viajes -->
+  <ion-card *ngIf="viajes.length === 0">
+    <ion-card-content class="ion-text-center">
+      <ion-icon name="car-outline" size="large" color="medium"></ion-icon>
+      <h2>No hay viajes disponibles</h2>
+      <p>Los nuevos viajes aparecerán aquí</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

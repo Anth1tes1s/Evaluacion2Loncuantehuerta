@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-iniciousuario',
@@ -8,7 +9,7 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./iniciousuario.page.scss'],
 })
 export class IniciousuarioPage implements OnInit {
-  origen: string = ' Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana';
+  origen: string = 'Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana';
   destino: string = '';
   tarifaPorKilometro: number = 3500;
   distanciaEstimada: number = 0; // Distancia calculada
@@ -17,7 +18,13 @@ export class IniciousuarioPage implements OnInit {
   // Propiedad para almacenar rutas
   rutas: { origen: string; destino: string; distancia: number; precio: number }[] = [];
 
-  constructor(private router: Router, private loadingController: LoadingController) {}
+  constructor(
+    private router: Router, 
+    private loadingController: LoadingController,
+    private storage: Storage
+  ) {
+    this.initStorage();
+  }
 
   ngOnInit() {
     this.initMap(); // Inicializar el mapa al cargar el componente
@@ -102,16 +109,43 @@ export class IniciousuarioPage implements OnInit {
     });
   }
 
-  confirmarRuta() {
-    // Almacenar la ruta
-    this.rutas.push({
+  async initStorage() {
+    await this.storage.create();
+    // Cargar viajes existentes al iniciar
+    this.cargarViajes();
+  }
+
+  async cargarViajes() {
+    const viajes = await this.storage.get('viajes') || [];
+    this.rutas = viajes;
+  }
+
+  async confirmarRuta() {
+    const nuevoViaje = {
       origen: this.origen,
       destino: this.destino,
       distancia: this.distanciaEstimada,
       precio: this.precio,
-    });
+      fecha: new Date().toISOString()
+    };
 
+    // Obtener viajes existentes
+    const viajesExistentes = await this.storage.get('viajes') || [];
+    
+    // Agregar el nuevo viaje
+    viajesExistentes.push(nuevoViaje);
+    
+    // Guardar en storage
+    await this.storage.set('viajes', viajesExistentes);
+    
+    // Actualizar la lista local
+    this.rutas = viajesExistentes;
+
+    // Redirigir a la página de servicio
+    this.router.navigate(['/servicio']);
   }
 
-  
+  registrarConductor() {
+    this.router.navigate(['/registroconductor']); // Redirigir a la página de registro de conductor
+  }
 }

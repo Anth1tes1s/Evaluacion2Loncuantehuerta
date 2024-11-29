@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { IonicStorageModule } from '@ionic/storage-angular'; // Importa el módulo de almacenamiento
-import { Drivers } from '@ionic/storage'; // Opcional para especificar controladores
+import { AuthService } from './core/auth.service'; // Importar el servicio de autenticación
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,12 +15,12 @@ import { Drivers } from '@ionic/storage'; // Opcional para especificar controlad
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicStorageModule.forRoot({
-      name: '_mydb',
-      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage] // Controladores (opcional)
-    }),
+    IonicStorageModule.forRoot()
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthService // Asegúrate de que esté registrado
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
