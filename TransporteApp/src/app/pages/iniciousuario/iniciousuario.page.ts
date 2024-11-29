@@ -8,7 +8,7 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./iniciousuario.page.scss'],
 })
 export class IniciousuarioPage implements OnInit {
-  origen: string = 'Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana';
+  origen: string = ' Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana';
   destino: string = '';
   tarifaPorKilometro: number = 3500;
   distanciaEstimada: number = 0; // Distancia calculada
@@ -111,11 +111,7 @@ export class IniciousuarioPage implements OnInit {
       precio: this.precio,
     });
 
-    // Redirigir a la página de servicio
-    this.router.navigate(['/servicio']);
   }
 
-  registrarConductor() {
-    this.router.navigate(['/registroconductor']); // Redirigir a la página de registro de conductor
-  }
+  
 }

@@ -15,7 +15,11 @@ const routes: Routes = [
   { path: 'servicio', canActivate: [AuthGuard], loadChildren: () => import('./pages/servicio/servicio.module').then(m => m.ServicioPageModule) },
   { path: 'servicioconductor', canActivate: [AuthGuard], loadChildren: () => import('./pages/servicioconductor/servicioconductor.module').then(m => m.ServicioconductorPageModule) },
   { path: 'menu', canActivate: [AuthGuard], loadChildren: () => import('./pages/menu/menu.module').then(m => m.MenuPageModule)},
-  { path: '**', redirectTo: 'registro' },
+  { path: '**', redirectTo: 'registro' },  {
+    path: 'inicioconductor',
+    loadChildren: () => import('./pages/inicioconductor/inicioconductor.module').then( m => m.InicioconductorPageModule)
+  },
+
 ];
 
 @NgModule({

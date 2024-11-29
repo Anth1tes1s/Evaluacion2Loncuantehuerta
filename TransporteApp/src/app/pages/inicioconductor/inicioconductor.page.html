@@ -1,29 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inicio Conductor</ion-title>
+    <ion-title>Viajes Disponibles</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Viajes Disponibles</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let viaje of viajesDisponibles">
-          <ion-label>
-            <h2>{{ viaje.destino }}</h2>
-            <p>Cliente: {{ viaje.cliente }}</p>
-            <p>Hora: {{ viaje.hora }}</p>
-          </ion-label>
-          <ion-button slot="end" (click)="seleccionarViaje(viaje)">Seleccionar viaje</ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let viaje of viajes" (click)="seleccionarViaje(viaje)">
+      <ion-label>
+        <h2>{{ viaje.origen }} - {{ viaje.destino }}</h2>
+        <p>Precio: {{ viaje.precio }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

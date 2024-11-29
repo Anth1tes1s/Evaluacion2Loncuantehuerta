@@ -1,28 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Servicio</ion-title>
+    <ion-title>Detalles del Viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Detalles del Viaje</ion-card-title>
+      <ion-card-title>Viaje de {{ viaje?.origen }} a {{ viaje?.destino }}</ion-card-title>
     </ion-card-header>
+
     <ion-card-content>
-      <p><strong>Conductor:</strong> {{ conductorSeleccionado?.nombre }}</p>
-      <p><strong>Modelo del Vehículo:</strong> {{ conductorSeleccionado?.modelo }}</p>
-      <p><strong>Color del Vehículo:</strong> {{ conductorSeleccionado?.color }}</p>
-      <p><strong>Ubicación del Conductor:</strong> {{ conductorSeleccionado?.ubicacion }}</p>
+      <p><strong>Precio:</strong> {{ viaje?.precio | currency }}</p>
+      <ion-button>Confirmar Viaje</ion-button>
     </ion-card-content>
   </ion-card>
-
-  <div id="map" style="height: 400px; width: 100%;"></div> <!-- Contenedor para el mapa -->
-
-  <ion-button expand="full" color="danger" (click)="cancelarViaje()">
-    Cancelar viaje
-  </ion-button>
 </ion-content>

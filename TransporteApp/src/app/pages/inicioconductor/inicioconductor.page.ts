@@ -1,21 +1,30 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { ViajeService } from 'src/app/viaje.service'; // Asegúrate de importar el servicio
+import { Router } from '@angular/router'; 
 @Component({
   selector: 'app-inicioconductor',
   templateUrl: './inicioconductor.page.html',
   styleUrls: ['./inicioconductor.page.scss'],
 })
-export class InicioconductorPage {
-  viajesDisponibles = [
-    { destino: 'Aeropuerto Internacional Arturo Merino Benítez, Santiago, Chile', cliente: 'Juan Pérez', hora: '14:30', origen: 'Plaza de Armas, Santiago, Chile', distancia: 20 },
-    { destino: 'Centro Comercial Costanera Center, Santiago, Chile', cliente: 'María López', hora: '15:00', origen: 'Estación Central, Santiago, Chile', distancia: 15 },
-    { destino: 'Hospital Clínico Universidad de Chile, Santiago, Chile', cliente: 'Pedro González', hora: '15:30', origen: 'Universidad de Chile, Santiago, Chile', distancia: 10 }
-  ];
+export class InicioconductorPage implements OnInit {
 
-  constructor(private router: Router) {}
+  // Lista de viajes obtenidos desde el servicio
+  viajes: any[] = [];
 
+  constructor(private viajeService: ViajeService,
+    private router: Router) {}
+
+  ngOnInit() {
+    // Obtener los viajes del servicio
+    this.viajes = this.viajeService.obtenerViajes();
+    console.log('Viajes disponibles:', this.viajes);
+  }
+
+  // Método para seleccionar un viaje y redirigir a servicio
   seleccionarViaje(viaje: any) {
-    this.router.navigate(['/servicioconductor'], { state: { viaje } });
+    console.log('Viaje seleccionado:', viaje);
+    // Navegar a la página de servicio pasando el viaje
+    // Asegúrate de que la ruta esté configurada correctamente
+    this.router.navigate(['/servicio'], { state: { viaje: viaje } });
   }
 }

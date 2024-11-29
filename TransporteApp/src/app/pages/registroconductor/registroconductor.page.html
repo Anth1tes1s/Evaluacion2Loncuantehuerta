@@ -1,44 +1,48 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Registro de Conductor</ion-title>
+    <ion-title>Registro Conductor</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <ion-item>
     <ion-label position="floating">Nombre</ion-label>
-    <ion-input type="text" required [(ngModel)]="nombre"></ion-input>
+    <ion-input [(ngModel)]="nombre" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Apellido</ion-label>
+    <ion-input [(ngModel)]="apellido" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">RUT</ion-label>
-    <ion-input type="text" required [(ngModel)]="rut"></ion-input>
+    <ion-input [(ngModel)]="rut" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Matrícula de Vehículo</ion-label>
-    <ion-input type="text" required [(ngModel)]="matricula"></ion-input>
+    <ion-label position="floating">Matrícula</ion-label>
+    <ion-input [(ngModel)]="matricula" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Tipo de Vehículo</ion-label>
-    <ion-input type="text" required [(ngModel)]="tipoVehiculo"></ion-input>
+    <ion-input [(ngModel)]="tipoVehiculo" type="text"></ion-input>
   </ion-item>
 
+  <!-- Input de origen (fijo por defecto) -->
   <ion-item>
-    <ion-label position="floating">Modelo de Vehículo</ion-label>
-    <ion-input type="text" required [(ngModel)]="modeloVehiculo"></ion-input>
+    <ion-label position="floating">Origen</ion-label>
+    <ion-input [(ngModel)]="origen" type="text" disabled></ion-input>
   </ion-item>
 
+  <!-- Input de destino -->
   <ion-item>
-    <ion-label position="floating">Color del Vehículo</ion-label>
-    <ion-input type="text" required [(ngModel)]="colorVehiculo"></ion-input>
+    <ion-label position="floating">Destino</ion-label>
+    <ion-input [(ngModel)]="destino" type="text"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" color="primary" (click)="registrarConductor()">
-    Registrarse
-  </ion-button>
+  <div id="map" style="height: 300px;"></div>
+
+  <ion-button expand="full" (click)="confirmarRuta()">Confirmar Ruta</ion-button>
 </ion-content>
