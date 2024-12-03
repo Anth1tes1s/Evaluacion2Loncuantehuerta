@@ -43,7 +43,7 @@ export class LoginconductorPage {
         buttons: [{
           text: 'OK',
           handler: () => {
-            this.router.navigate(['/menu']);
+            this.router.navigate(['/menuconductor']);
           }
         }]
       });

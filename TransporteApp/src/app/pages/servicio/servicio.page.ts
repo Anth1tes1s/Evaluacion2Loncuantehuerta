@@ -114,15 +114,18 @@ export class ServicioPage implements OnInit {
   async cargarDatos() {
     // Cargar viajes y conductores
     this.viajes = await this.storage.get('viajes') || [];
-    this.conductores = await this.storage.get('conductores') || [];
+    const conductores = JSON.parse(localStorage.getItem('conductores') || '[]');
     
-    // Combinar la información
+    // Combinar la información de viajes con los datos del conductor
     this.viajesConConductor = this.viajes.map(viaje => {
-      // Encontrar el conductor más reciente
-      const conductor = this.conductores[this.conductores.length - 1];
+      const conductor = conductores[conductores.length - 1];
       return {
         ...viaje,
-        conductor: conductor
+        nombreConductor: conductor.nombre,
+        apellidoConductor: conductor.apellido,
+        edadConductor: conductor.edad,
+        patenteConductor: conductor.patente,
+        tipoVehiculoConductor: conductor.tipoVehiculo
       };
     });
   }

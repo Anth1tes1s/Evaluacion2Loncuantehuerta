@@ -42,4 +42,9 @@ export class VerificacionService {
     localStorage.setItem('conductores', JSON.stringify(conductores));
     return true;
   }
+
+  obtenerConductores() {
+    const conductoresString = localStorage.getItem('conductores');
+    return conductoresString ? JSON.parse(conductoresString) : [];
+  }
 }
