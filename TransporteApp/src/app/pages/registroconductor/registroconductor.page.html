@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Registro de Conductor</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="apellido" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input [(ngModel)]="edad" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Tipo de Vehículo</ion-label>
+        <ion-select [(ngModel)]="tipoVehiculo">
+          <ion-select-option value="auto">Auto</ion-select-option>
+          <ion-select-option value="camioneta">Camioneta</ion-select-option>
+          <ion-select-option value="van">Moto</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Patente</ion-label>
+        <ion-input [(ngModel)]="patente" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input [(ngModel)]="contrasenia" type="password"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="ion-margin-top" (click)="registrarConductor()">
+        Registrar Conductor
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -32,4 +32,14 @@ export class VerificacionService {
     // Verifica si existe un token en el almacenamiento local
     return !!localStorage.getItem('authToken');
   }
+
+  registrarConductor(conductor: any): boolean {
+    const conductores = JSON.parse(localStorage.getItem('conductores') || '[]');
+    if (conductores.some((c: any) => c.patente === conductor.patente)) {
+      return false;
+    }
+    conductores.push(conductor);
+    localStorage.setItem('conductores', JSON.stringify(conductores));
+    return true;
+  }
 }
