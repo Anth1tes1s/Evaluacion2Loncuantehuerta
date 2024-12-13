@@ -42,11 +42,60 @@ export class RegistroconductorPage {
     this.contrasenia = localStorage.getItem('conductorContrasenia') || '';
   }
 
+  // Validaciones para los campos
+  validarNombre(nombre: string): boolean {
+    const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    return nombreRegex.test(nombre);
+  }
+
+  validarApellido(apellido: string): boolean {
+    const apellidoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    return apellidoRegex.test(apellido);
+  }
+
+  validarPatente(patente: string): boolean {
+    const patenteRegex = /^[a-zA-Z0-9]{6}$/;
+    return patenteRegex.test(patente);
+  }
+
   async registrarConductor() {
+    // Validar campos vacíos
     if (!this.nombre || !this.apellido || !this.edad || !this.tipoVehiculo || !this.patente || !this.contrasenia) {
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Por favor, complete todos los campos.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    // Validar nombre y apellido
+    if (!this.validarNombre(this.nombre)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'El nombre solo puede contener letras y espacios.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (!this.validarApellido(this.apellido)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'El apellido solo puede contener letras y espacios.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    // Validar patente
+    if (!this.validarPatente(this.patente)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'La patente debe contener exactamente 6 caracteres alfanuméricos.',
         buttons: ['OK']
       });
       await alert.present();

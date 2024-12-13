@@ -19,7 +19,7 @@ export class IniciousuarioPage implements OnInit {
   rutas: { origen: string; destino: string; distancia: number; precio: number }[] = [];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private loadingController: LoadingController,
     private storage: Storage
   ) {
@@ -33,24 +33,42 @@ export class IniciousuarioPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando...',
-      duration: 1500
+      duration: 1500,
     });
     await loading.present();
-  
-  }
-
-  async someAsyncOperation() {
-    await this.presentLoading();
-
   }
 
   initMap() {
     // Inicializa el mapa
     const mapOptions: google.maps.MapOptions = {
-      center: { lat: -33.4489, lng: -70.6693 }, // Santiago, Chile (ejemplo)
+      center: { lat: -33.4489, lng: -70.6693 }, // Santiago, Chile
       zoom: 12,
     };
     const map = new google.maps.Map(document.getElementById('map') as HTMLElement, mapOptions);
+  }
+
+  validarDestinoEnRegion(callback: (isValid: boolean) => void) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: this.destino }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+        const addressComponents = results[0].address_components;
+
+        // Buscar la región en los componentes de la dirección
+        const regionMetropolitana = addressComponents.some(component =>
+          component.long_name.includes('Región Metropolitana')
+        );
+
+        if (regionMetropolitana) {
+          callback(true);
+        } else {
+          alert('El destino debe estar dentro de la Región Metropolitana de Santiago.');
+          callback(false);
+        }
+      } else {
+        alert('No se pudo validar el destino: ' + status);
+        callback(false);
+      }
+    });
   }
 
   calcularRuta() {
@@ -59,28 +77,33 @@ export class IniciousuarioPage implements OnInit {
       return;
     }
 
-    const service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [this.origen],
-        destinations: [this.destino],
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (response: google.maps.DistanceMatrixResponse | null, status: google.maps.DistanceMatrixStatus) => {
-        if (status === google.maps.DistanceMatrixStatus.OK && response) {
-          const elements = response.rows[0].elements;
-          if (elements[0].status === 'OK') {
-            this.distanciaEstimada = elements[0].distance.value / 1000; // Convertir a kilómetros
-            this.precio = this.calcularPrecio();
-            this.mostrarRuta(); // Mostrar la ruta en el mapa
-          } else {
-            alert('No se pudo calcular la distancia.');
+    // Validar que el destino esté en la Región Metropolitana
+    this.validarDestinoEnRegion((isValid) => {
+      if (isValid) {
+        const service = new google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+          {
+            origins: [this.origen],
+            destinations: [this.destino],
+            travelMode: google.maps.TravelMode.DRIVING,
+          },
+          (response: google.maps.DistanceMatrixResponse | null, status: google.maps.DistanceMatrixStatus) => {
+            if (status === google.maps.DistanceMatrixStatus.OK && response) {
+              const elements = response.rows[0].elements;
+              if (elements[0].status === 'OK') {
+                this.distanciaEstimada = elements[0].distance.value / 1000; // Convertir a kilómetros
+                this.precio = this.calcularPrecio();
+                this.mostrarRuta(); // Mostrar la ruta en el mapa
+              } else {
+                alert('No se pudo calcular la distancia.');
+              }
+            } else {
+              alert('Error al obtener la distancia: ' + status);
+            }
           }
-        } else {
-          alert('Error al obtener la distancia: ' + status);
-        }
+        );
       }
-    );
+    });
   }
 
   calcularPrecio(): number {
@@ -93,7 +116,7 @@ export class IniciousuarioPage implements OnInit {
     const map = new google.maps.Map(document.getElementById('map') as HTMLElement);
 
     directionsRenderer.setMap(map);
-    
+
     const request: google.maps.DirectionsRequest = {
       origin: this.origen,
       destination: this.destino,
@@ -126,26 +149,26 @@ export class IniciousuarioPage implements OnInit {
       destino: this.destino,
       distancia: this.distanciaEstimada,
       precio: this.precio,
-      fecha: new Date().toISOString()
+      fecha: new Date().toISOString(),
     };
 
     // Obtener viajes existentes
     const viajesExistentes = await this.storage.get('viajes') || [];
-    
+
     // Agregar el nuevo viaje
     viajesExistentes.push(nuevoViaje);
-    
+
     // Guardar en storage
     await this.storage.set('viajes', viajesExistentes);
-    
+
     // Actualizar la lista local
     this.rutas = viajesExistentes;
 
     // Redirigir a la página de servicio
     this.router.navigate(['/servicio']);
   }
-
-  registrarConductor() {
-    this.router.navigate(['/registroconductor']); // Redirigir a la página de registro de conductor
+  
+    async someAsyncOperation() {
+      await this.presentLoading();
   }
 }

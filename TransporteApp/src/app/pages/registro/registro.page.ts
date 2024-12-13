@@ -31,7 +31,7 @@ export class RegistroPage {
     localStorage.setItem('telefono', this.telefono);
     localStorage.setItem('contrasenia', this.contrasenia);
   }
-  
+
   cargarDatos() {
     this.nombre = localStorage.getItem('nombre') || '';
     this.apellido = localStorage.getItem('apellido') || '';
@@ -41,9 +41,18 @@ export class RegistroPage {
     this.telefono = localStorage.getItem('telefono') || '';
     this.contrasenia = localStorage.getItem('contrasenia') || '';
   }
-  
+
+  validarCorreo(correo: string): boolean {
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return correoRegex.test(correo);
+  }
+
+  validarTelefono(telefono: string): boolean {
+    const telefonoRegex = /^\d{9}$/;
+    return telefonoRegex.test(telefono);
+  }
+
   async registrarUsuario() {
-   
     if (!this.nombre || !this.apellido || !this.usuario || !this.edad || !this.correo || !this.telefono || !this.contrasenia) {
       const alert = await this.alertController.create({
         header: 'Error',
@@ -54,7 +63,26 @@ export class RegistroPage {
       return;
     }
 
-    
+    if (!this.validarCorreo(this.correo)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Ingrese un correo válido.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (!this.validarTelefono(this.telefono)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'El teléfono debe contener exactamente 9 dígitos.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
     const confirmAlert = await this.alertController.create({
       header: 'Confirmar registro',
       message: '¿Estás seguro que quieres registrar este usuario?',
@@ -76,7 +104,6 @@ export class RegistroPage {
               contrasenia: this.contrasenia
             };
 
-            
             if (this.verificacionService.registrarUsuario(nuevoUsuario)) {
               this.guardarDatos();
 
